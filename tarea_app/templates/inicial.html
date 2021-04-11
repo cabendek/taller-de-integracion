@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class = "container"> 
+    <br><br>
+    <div class="row"> 
+        <div class="col-md-6"> 
+            <br>
+            <img class="img-fluid" src="https://pics.filmaffinity.com/Breaking_Bad_Serie_de_TV-771941027-large.jpg"
+            alt="" style = "width: 90%;">
+            <h3 class="card-title text-center ">Breaking Bad</h3>
+            <br><br>
+            <div class="list-group">
+            {% for season in all_seasons_bb %}
+                <a href="temporada/season/{{season}}" class="list-group-item list-group-item-action">Temporada {{season}}</a>    
+            {% endfor %}
+            </div>
+        
+        </div> 
+        <div class="col-md-6">
+            <br>
+            <img class="img-fluid" src="https://images3.alphacoders.com/569/thumb-1920-569832.jpg"
+             alt="" style = "width: 90%;">
+            <h3 class="card-title text-center ">Better Call Soul</h3>
+            <br><br>
+            <div class="list-group">
+            {% for season in all_seasons_bcs %} <!-- Mandar a otro url -->
+                <a href="temporada/season2/{{season}}" class="list-group-item list-group-item-action">Temporada {{season}}</a>    
+            {% endfor %}
+
+          </div> 
+    </div>
+</div>
+
+{% endblock %}

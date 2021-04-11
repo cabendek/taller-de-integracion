@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+      {% for id, character in all_characters.items %}
+        <div class="col-md-4 col-sm-6 col-lg-3">
+          <div class="card">
+            <img class="card-img-top" src="{{ character.img }}" alt="Card image cap">
+            <div class="card-body text-center">
+              <p class="card-title">{{ character.nombre }}</p>
+              <hr>
+              <p class="card-text">{{ character.apodo }}</p>
+              <a href="/characters/{{ id }}"
+              ><input
+                type="submit"
+                value="Detalles"
+                class="btn btn-danger btn-sm"
+                type="button"
+            /></a>
+            </div>
+          </div>
+          <br><br><br>
+        </div>
+      {% endfor %}
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class = "container"> 
+    <br><br>
+    <div class="row"> 
+        <div class="col-md-5">
+          <br>
+          <img class="img-fluid" src="{{ character.img }}" alt="" style = "width: 90%;">
+          <br><br>
+          <h3 class="card-title text-center ">{{ character.nombre }}</h3>
+        </div> 
+        <div class="col-md-7 shadow-lg p-3 mb-5 bg-white rounded">
+          <h1 class="my-3">Descripción del Personaje</h1>
+          
+          <h5 class="my-3">Estado:</h5>
+          <p class = "lead">{{ character.estado }}</p>
+
+          <h5 class="my-3">Ocupación:</h5>
+          <ul>
+          {%for ocupaciones in character.ocupacion %}
+          <li>{{ ocupaciones }}</li>
+          {% endfor %}
+          </ul>
+
+          <h5 class="my-3">Apodo:</h5>
+          <p class = "lead">{{ character.apodo }}</p>
+
+          <h5 class="my-3">Actor:</h5>
+          <p class = "lead">{{ character.actor }}</p>
+
+          <h5 class="my-3">Temporadas de Breaking Bad:</h5>
+          <div class="list-group">
+          {%for temporadas in character.apariciones %}
+              <a href="/temporada/season/{{temporadas}}" class="list-group-item list-group-item-action">Temporada {{temporadas}}</a>    
+          {% endfor %}
+          </div>
+
+          <h5 class="my-3">Temporadas de Better Call Soul:</h5>
+          <div class="list-group">
+          {%for temporadas_bcs in character.apariciones_bcs %}
+              <a href="/temporada/season2/{{temporadas_bcs}}" class="list-group-item list-group-item-action">Temporada {{temporadas_bcs}}</a>    
+          {% endfor %}
+          </div>
+
+          <h5 class="my-3">Categoria:</h5>
+          <p class = "lead">{{ character.categoria }}</p>
+          
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

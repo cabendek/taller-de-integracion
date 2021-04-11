@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class = "container"> 
+    <br><br>
+    <div class="col-md-10"> 
+            <br>
+            <img class="img-fluid" src="https://images3.alphacoders.com/569/thumb-1920-569832.jpg"
+            alt="" style = "width: 90%;">
+            <br><br>
+            <h2 class="card-title text-left ">Temporada {{n_season}}</h2>
+            
+
+            <div class="list-group">
+           
+            {% for key, value in episode_list.items %}
+                <a href="/episode/{{value.1}}" class="list-group-item list-group-item-action">
+                    Episodio {{key}} : {{value.0}}</a>
+            {% endfor %}
+           
+            </div>
+        
+        </div> 
+</div>
+
+{% endblock %}
