@@ -52,24 +52,36 @@ def search_characters(request):
     all_characters = {}
 
     name = request.GET['search']
-    url = f'https://tarea-1-breaking-bad.herokuapp.com/api/characters?name={name}'
-    response = requests.get(url)
-    characters = response.json()
-    for i in characters:
+    iguales=False
+    contador = 0
+    largo_anterior = 0
+    while iguales==False:
 
-        id = i['char_id']
-        nombre = i['name']
-        occupation = i['occupation']
-        img = i['img']
-        status = i['status']
-        nickname = i['nickname']
-        appearance = i['appearance']
-        better_call_saul_appearance = i['better_call_saul_appearance']
-        portrayed = i['portrayed']
-        category = i['category']
+        url = f'https://tarea-1-breaking-bad.herokuapp.com/api/characters?name={name}&limit=10&offset={contador*10}'
+        response = requests.get(url)
+        characters = response.json()
 
-        all_characters[id] = {'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
-        'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category }
+        for i in characters:
+
+            id = i['char_id']
+            nombre = i['name']
+            occupation = i['occupation']
+            img = i['img']
+            status = i['status']
+            nickname = i['nickname']
+            appearance = i['appearance']
+            better_call_saul_appearance = i['better_call_saul_appearance']
+            portrayed = i['portrayed']
+            category = i['category']
+
+            all_characters[id] = {'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
+            'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category }
+        
+        contador += 1
+        if largo_anterior == len(all_characters):
+            iguales = True
+        else:
+            largo_anterior = len(all_characters)
     
 
     return render(request, 'characters/character.html', {'all_characters': all_characters})
