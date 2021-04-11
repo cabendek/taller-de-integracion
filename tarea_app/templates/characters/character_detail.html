@@ -30,6 +30,13 @@
           <h5 class="my-3">Actor:</h5>
           <p class = "lead">{{ character.actor }}</p>
 
+          <h5 class="my-3">Frases:</h5>
+          <ul>
+          {%for id, frases in character.frases.items %}
+          <li>{{ frases }}</li>
+          {% endfor %}
+          </ul>
+
           <h5 class="my-3">Temporadas de Breaking Bad:</h5>
           <div class="list-group">
           {%for temporadas in character.apariciones %}
@@ -37,7 +44,7 @@
           {% endfor %}
           </div>
 
-          <h5 class="my-3">Temporadas de Better Call Soul:</h5>
+          <h5 class="my-3">Temporadas de Better Call Saul:</h5>
           <div class="list-group">
           {%for temporadas_bcs in character.apariciones_bcs %}
               <a href="/temporada/season2/{{temporadas_bcs}}" class="list-group-item list-group-item-action">Temporada {{temporadas_bcs}}</a>    

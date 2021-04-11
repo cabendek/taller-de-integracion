@@ -86,34 +86,68 @@ def search_characters(request):
 
     return render(request, 'characters/character.html', {'all_characters': all_characters})
 
+def search_quotes(request, name):
+
+    quotes_of_character={}
+    url = f'https://tarea-1-breaking-bad.herokuapp.com//api/quote?author={name}'
+    print(url)
+    response = requests.get(url)
+    quotes = response.json()
+    
+
+    for i in quotes:
+        id = i["quote_id"]
+        if name == i["author"]:
+            quotes_of_character[id] = i["quote"]
+
+    return quotes_of_character
+
 
 
 def character_detail(request, id):
 
-            all_characters ={}        
-            
-            url = f'https://tarea-1-breaking-bad.herokuapp.com/api/characters/{id}'
-            response = requests.get(url)
-            characters = response.json()
+    all_characters ={}        
+    
+    url = f'https://tarea-1-breaking-bad.herokuapp.com/api/characters/{id}'
+    response = requests.get(url)
+    characters = response.json()
 
-            for i in characters:
+    for i in characters:
 
-                id = i['char_id']
-                nombre = i['name']
-                occupation = i['occupation']
-                img = i['img']
-                status = i['status']
-                nickname = i['nickname']
-                appearance = i['appearance']
-                better_call_saul_appearance = i['better_call_saul_appearance']
-                portrayed = i['portrayed']
-                category = i['category']
+        id = i['char_id']
+        nombre = i['name']
+        occupation = i['occupation']
+        img = i['img']
+        status = i['status']
+        nickname = i['nickname']
+        appearance = i['appearance']
+        better_call_saul_appearance = i['better_call_saul_appearance']
+        portrayed = i['portrayed']
+        category = i['category']
+    
+    
+        quotes_of_character = {}
+        nombre2 = nombre.replace(" ","+")
+        url2 = f'https://tarea-1-breaking-bad.herokuapp.com/api/quote?author={nombre2}'
+        response2 = requests.get(url2)
+        print(response2)
+        quotes = response2.json()
+        
 
-                all_characters = {'id': id, 'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
-                'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category }
-            
+        for j in quotes:
+            print
+            id = j["quote_id"]
+            if nombre == j["author"]:
+                quotes_of_character[id] = j["quote"]
+        
+        quotes = quotes_of_character
+        
+        all_characters = {'id': id, 'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
+        'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category,
+        'frases': quotes }
+    
 
-            return render(request, 'characters/character_detail.html', {'character': all_characters})
+    return render(request, 'characters/character_detail.html', {'character': all_characters})
 
 def season_detail(request, season):
     episode_list = {}
@@ -219,7 +253,7 @@ def character(request):
     if request.method=='GET':
         name = request.GET.get('name')
         if not name:
-            return render(request, 'inventory/product.html')
+            return render(request, '')
         else:
             all_characters ={}        
             
@@ -239,10 +273,27 @@ def character(request):
                 better_call_saul_appearance = i['better_call_saul_appearance']
                 portrayed = i['portrayed']
                 category = i['category']
+                
+                
+                quotes_of_character = {}
+                nombre2 = nombre.replace(" ","+")
+                url2 = f'https://tarea-1-breaking-bad.herokuapp.com/api/quote?author={nombre2}'
+                response2 = requests.get(url2)
+                print(response2)
+                quotes = response2.json()
+                
 
-                if name == nombre:
-                    all_characters = {'id': id, 'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
-                    'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category }
+                for j in quotes:
+                    print
+                    id = j["quote_id"]
+                    if nombre == j["author"]:
+                        quotes_of_character[id] = j["quote"]
+                
+                quotes = quotes_of_character
+                
+                all_characters = {'id': id, 'nombre':nombre, 'ocupacion': occupation,'img':img, 'estado':status, 'apodo':nickname,
+                'apariciones':appearance, 'apariciones_bcs': better_call_saul_appearance, 'actor':portrayed, 'categoria': category,
+                'frases': quotes }
             
 
             return render(request, 'characters/character_detail.html', {'character': all_characters})
